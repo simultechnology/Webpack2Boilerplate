@@ -3,3 +3,7 @@ node_modules
 
 public/*
 !.gitkeep
+!index.html
+
+*.log
+

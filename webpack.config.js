@@ -3,43 +3,34 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    js: './src/main.js',
-    css: './src/main.css',
+    main: './src/main.js'
   },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'css-loader!postcss-loader'
-        )
-      }
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'postcss-loader']
+        })
+      },
     ],
-    options: {
-      plugins: () => [
-        require('postcss-easy-import')({glob: true}),
-      ]
-    }
   },
   plugins: [
     new ExtractTextPlugin('bundle.css'),
   ],
-  // postcss: [
-  //   require('postcss-easy-import')({glob: true}),
-  // ],
   devtool: 'source-map',
   devServer: {
     contentBase: './public',
-    port: 8080,
+    port: 18080,
     inline: true,
     historyApiFallback: true,
   },
